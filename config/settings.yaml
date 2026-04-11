@@ -1,0 +1,57 @@
+app:
+  device_preference: cpu
+  allow_fallback: true
+  startup_probe: false
+  log_level: INFO
+
+inference:
+  sample_rate: 44100
+  segment_seconds: 8
+  overlap_seconds: 1
+  batch_size: 1
+  num_threads: 8
+  quality_preset: realdata_cpu
+
+fallback_policy:
+  on_oom_reduce_segment_seconds: true
+  min_segment_seconds: 4
+  retry_count: 2
+  retry_backoff_sec: 1.5
+
+soulx:
+  mode: svc
+
+  svc_command_template: >-
+    /opt/homebrew/bin/conda run -n soulxsinger python -m cli.inference_svc
+    --device {device}
+    --model_path {model}
+    --config soulxsinger/config/soulxsinger.yaml
+    --prompt_wav_path {prompt_wav}
+    --target_wav_path {target_wav}
+    --save_dir {save_dir}
+    --auto_shift
+    --pitch_shift {pitch_shift}
+
+  svs_command_template: >-
+    /opt/homebrew/bin/conda run -n soulxsinger python -m cli.inference
+    --device {device}
+    --model_path {model}
+    --config soulxsinger/config/soulxsinger.yaml
+    --prompt_wav_path {prompt_wav}
+    --prompt_metadata_path {prompt_meta}
+    --target_metadata_path {target_meta}
+    --phoneset_path soulxsinger/utils/phoneme/phone_set.json
+    --save_dir {save_dir}
+    --auto_shift
+    --pitch_shift {pitch_shift}
+
+  command_template: /opt/homebrew/bin/conda run -n soulxsinger python infer.py --input {input} --output {output} --model {model} --device {device} --segment {segment_seconds}
+
+  output_suffix: .sung.wav
+  skip_output_check: true
+  work_dir: /Users/k4195255/Library/CloudStorage/OneDrive-共有ライブラリ-(有)鈴真設計/Switch ROM 共有 - 課題/soulx-singer-local-app/SoulX-Singer
+  pitch_shift: 0
+  strict_target_vocal_removal: true
+
+  svc_model: pretrained_models/SoulX-Singer/model-svc.pt
+  svs_model: pretrained_models/SoulX-Singer/model.pt

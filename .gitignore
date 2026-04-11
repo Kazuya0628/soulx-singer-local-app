@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Build artifacts
+build/
+dist/
+*.spec
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# SoulX-Singer (downloaded separately — large files)
+SoulX-Singer/
+pretrained_models/
+models/
+*.pth
+*.pt
+*.onnx
+*.ckpt
+
+# Output / generated audio
+output/
+*.sung.wav
+
+# OneDrive / SharePoint sync conflict files
+*-[0-9][0-9][0-9][0-9]N[0-9][0-9][0-9][0-9].md
+*-[0-9][0-9][0-9][0-9]N[0-9][0-9][0-9][0-9].*
